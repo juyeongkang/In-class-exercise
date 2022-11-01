@@ -14,28 +14,29 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 const renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xdfdfdf);
+renderer.setClearColor(0xFFEE00);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(500, 500);
 document.body.appendChild(renderer.domElement);
 
 // Add a polygon to the scene
-const geometry = new THREE.IcosahedronGeometry(1, 0);
-const material = new THREE.MeshStandardMaterial({ color: 0x2e8e39 });
-const poly = new THREE.Mesh(geometry, material);
-scene.add(poly);
+const geometry = new THREE.TorusKnotGeometry( 100, 8, 108, 16);
+const material = new THREE.MeshBasicMaterial( {color: 0x0554F2} );
+const torusKnot = new THREE.Mesh(geometry, material);
+scene.add(torusKnot);
+
 
 // add wireframe to shape
-const matLineBasic = new THREE.LineBasicMaterial({ color: 0x2e8e99 });
-const wireframe = new THREE.WireframeGeometry(geometry);
-const line = new THREE.LineSegments(wireframe, matLineBasic);
-line.material.depthTest = false;
-line.material.opacity = 0.9;
-line.material.transparent = false;
-scene.add(line);
+// const matLineBasic = new THREE.LineBasicMaterial({ color: 0x2e8e99 });
+// const wireframe = new THREE.WireframeGeometry(geometry);
+// const line = new THREE.LineSegments(wireframe, matLineBasic);
+// line.material.depthTest = false;
+// line.material.opacity = 0.9;
+// line.material.transparent = false;
+// scene.add(line);
 
 // Position our camera so we can see the shape
-camera.position.z = 5;
+// camera.position.z = 5;
 
 // Add a directional light to the scene
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
@@ -47,15 +48,17 @@ scene.add(ambientLight);
 
 // Define and then call the render loop
 // Define
-function render() {
-  requestAnimationFrame(render);
+function animate() {
+  requestAnimationFrame( animate );
 
   // Rotate our shape
-  poly.rotation.x += 0.005;
-  poly.rotation.y += 0.005;
-  line.rotation.x += 0.005;
-  line.rotation.y += 0.005;
+  torusKnot.rotation.x += 0.01;
+  torusKnot.rotation.y += 0.01;
+  torusKnot.rotation.z += 0.01;
+
   renderer.render(scene, camera);
 }
+
+animate()
 // Call
-render();
+// render();
