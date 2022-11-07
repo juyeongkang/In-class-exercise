@@ -9,8 +9,9 @@ import * as THREE from "../build/three.module.js";
 // Import add-ons for GLTF models and orbit controls
 import { OrbitControls } from "../src/OrbitControls.js";
 import { GLTFLoader } from "../src/GLTFLoader.js";
+// let container, camera, scene, renderer;
 
-//Identify div in HTML to place scene
+//'space'=id, and in html, I can call this client2 loading page to html.
 var container = document.getElementById("space");
 
 //Create scene
@@ -34,11 +35,14 @@ var newMaterial = new THREE.MeshStandardMaterial({ color: 0x2E5939 });
 
 // Variable for GLTF data
 var mesh;
+var mesh2;
 
 // Load GLTF model, add material, and add it to the scene
 const loader = new GLTFLoader().load(
-  "../../assets/testing123fogv3.glb", // comment this line out and un comment the line below to swithc models
+  "../../assets/bottle2.glb", // comment this line out and un comment the line below to swithc models
   //"./assets/gourd_web.glb", //<-- photogrammetery model
+
+
   function(gltf) {
     // Scan loaded model for mesh and apply defined material if mesh is present
     gltf.scene.traverse(function(child) {
@@ -49,8 +53,8 @@ const loader = new GLTFLoader().load(
     // set position and scale
     mesh = gltf.scene;
     mesh.position.set(0, 0, 0);
-    mesh.rotation.set(45, 0, 0);
-    mesh.scale.set(.2, .2, .2); // <-- change this to (1, 1, 1) for photogrammetery model
+    mesh.rotation.set(0, 0, 0);
+    mesh.scale.set(.55, .55, .55); // <-- change this to (1, 1, 1) for photogrammetery model
     // Add model to scene
     scene.add(mesh);
   },
@@ -59,6 +63,34 @@ const loader = new GLTFLoader().load(
     console.error(error);
   }
 );
+
+const loader2 = new GLTFLoader().load(
+  "../../assets/bottle2.glb", // comment this line out and un comment the line below to swithc models
+  //"./assets/gourd_web.glb", //<-- photogrammetery model
+
+
+  function(gltf2) {
+    // Scan loaded model for mesh and apply defined material if mesh is present
+    gltf2.scene.traverse(function(child) {
+      if (child.isMesh) {
+        //child.material = newMaterial;
+      }
+    });
+    // set position and scale
+    mesh2 = gltf2.scene;
+    mesh2.position.set(0.9, -0.2, 1.2);
+    mesh2.rotation.set(0, 0, 0);
+    mesh2.scale.set(.30, .30, .30); // <-- change this to (1, 1, 1) for photogrammetery model
+    // Add model to scene
+    scene.add(mesh2);
+  },
+  undefined,
+  function(error) {
+    console.error(error);
+  }
+);
+
+
 
 // Add Orbit Controls
 const controls = new OrbitControls(camera, renderer.domElement);
